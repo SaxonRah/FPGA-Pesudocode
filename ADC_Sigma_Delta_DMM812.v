@@ -11,7 +11,7 @@ reg [15:0] decimated_out;
 reg [15:0] modulated_out;
 reg [32:0] calibrated_out;
 
-sd_oversampler oversampler(
+sd_oversampling oversampling(
     .clk(clk),
     .reset(reset),
     .analog_in(analog_in),
@@ -25,7 +25,7 @@ sd_digital_filter filter(
     .filtered_out(filtered_in)
 );
 
-sd_decimator decimator(
+sd_decimation decimation(
     .clk(clk),
     .reset(reset),
     .filtered_in(filtered_in),
@@ -46,6 +46,8 @@ sd_calibration calibration(
     .calibrated_out(calibrated_out)
 );
 
-assign digital_out = calibrated_out;
-
+// assign digital_out = calibrated_out;
+always @(*) begin
+    digital_out = calibrated_out;
+end
 endmodule
