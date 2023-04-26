@@ -1,4 +1,4 @@
-module decimation(
+module sd_decimation(
     input clk,
     input reset,
     input [47:0] filtered_in,
