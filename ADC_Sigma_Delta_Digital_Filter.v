@@ -1,4 +1,4 @@
-module digital_filter(
+module sd_digital_filter(
     input clk,
     input reset,
     input [47:0] oversampled_in,
