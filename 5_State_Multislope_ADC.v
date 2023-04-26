@@ -16,7 +16,7 @@ module multislope_adc (
   reg [7:0] last_avg;
   reg [7:0] reference;
   reg [7:0] sample;
-  reg [2:0]  state;
+  reg [2:0] state;
 
   always @(posedge clk) begin
     case (state)
@@ -39,7 +39,7 @@ module multislope_adc (
           sum <= 0;
         end else begin
           count_ref <= count_ref + 1;
-          sum <= sum + $random;
+          sum <= sum + $random;    // Simulated random noise
           counter <= counter + 1;
         end
       end
@@ -52,7 +52,7 @@ module multislope_adc (
           sum <= 0;
         end else begin
           count_int <= count_int + 1;
-          sum <= sum + $random;
+          sum <= sum + $random;    // Simulated random noise
           counter <= counter + 1;
         end
       end
