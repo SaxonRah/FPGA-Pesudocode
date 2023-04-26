@@ -35,7 +35,12 @@ always @(posedge clk or posedge reset) begin
         integrator6 <= integrator6 + integrator5 - feedback;
         integrator7 <= integrator7 + integrator6 - feedback;
         integrator8 <= integrator8 + integrator7 - feedback;
-        feedback <= integrator8 > 0x7FFFFF ? 0xFFFFFF : 0;
+        //feedback <= integrator8 > 0x7FFFFF ? 0xFFFFFF : 0;
+        if (integrator8 > 23'd8388607) begin
+            feedback <= 24'hFFFFFF;
+        end else begin
+            feedback <= 0;
+        end
         digital_out <= {feedback, 8'b00000000};
     end
 end
