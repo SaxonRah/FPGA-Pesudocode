@@ -8,6 +8,7 @@ module sd_DMM812(
 reg [15:0] oversampled_in;
 reg [15:0] filtered_in;
 reg [15:0] decimated_out;
+reg [15:0] modulated_out;
 reg [32:0] calibrated_out;
 
 sd_oversampler oversampler(
@@ -31,10 +32,17 @@ sd_decimator decimator(
     .decimated_out(decimated_out)
 );
 
+sd_modulator modulator(
+    .clk(clk),
+    .reset(reset),
+    .analog_in(decimated_out),
+    .quantized_out(modulated_out)
+);
+
 sd_calibration calibration(
     .clk(clk),
     .reset(reset),
-    .adc_in(decimated_out),
+    .adc_in(modulated_out),
     .calibrated_out(calibrated_out)
 );
 
