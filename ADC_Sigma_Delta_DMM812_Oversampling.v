@@ -9,6 +9,7 @@ reg [23:0] integrator;
 reg [23:0] feedback;
 
 parameter OSR = 64; // oversampling ratio
+integer i = 0; // oversampling ratio
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -17,9 +18,14 @@ always @(posedge clk or posedge reset) begin
         oversampled_out <= 0;
     end else begin
         // Oversampling loop
-        for (integer i = 0; i < OSR; i = i + 1) begin
+        for (i = 0; i < OSR; i = i + 1) begin
             integrator <= integrator + analog_in - feedback;
-            feedback <= integrator > 0x7FFFFF ? 0xFFFFFF : 0;
+            //feedback <= integrator > 0x7FFFFF ? 0xFFFFFF : 0;
+            if (integrator > 23'd8388607) begin
+                feedback <= 24'hFFFFFF;
+            end else begin
+                feedback <= 0;
+            end
         end
         oversampled_out <= {feedback, integrator};
     end
