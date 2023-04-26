@@ -1,4 +1,4 @@
-module oversampling(
+module sd_oversampling(
     input clk,
     input reset,
     input [23:0] analog_in,
