@@ -9,7 +9,6 @@ https://archive.org/details/Hewlett-Packard_Journal_Vol._40_No._2_1989-04_Hewlet
 
 ## ADC_3_State_Multislope.v
 ### Implements a simple multislope ADC that converts an analog input voltage into an 8-bit digital output. It operates by charging and discharging a capacitor to measure the input voltage.
-
 It has three inputs and one output. The clk input is a clock signal used to synchronize the operations of the ADC. The start_conversion input is used to trigger the start of a conversion. The digital_output output is an 8-bit binary value that represents the digital equivalent of the input voltage.
 
 The module has four internal registers: count, charge_value, discharge_value, and state. The count register keeps track of the number of clock cycles since the start of a conversion. The charge_value and discharge_value registers determine the time it takes to charge and discharge the capacitor, respectively. The state register represents the current state of the ADC.
@@ -56,13 +55,14 @@ The always block in the module is triggered by the positive edge of the input cl
 
 # Sigma Delta ADC
 ## ADC_Sigma_Delta.v
-### is to convert an analog input signal into a digital output signal with a high level of precision and accuracy.
+### The goal is to convert an analog input signal into a digital output signal with a high level of precision and accuracy.
 This implementation assumes that the analog input is a 24-bit value and the digital output is a 33-bit value with 8 fractional bits. It's an 8th-order sigma-delta modulator with eight integrators and a feedback loop. The feedback loop generates a 1-bit signal that is used as the output. When the reset signal is high, all integrators and feedback signal are reset to zero. When reset is low, the integrators and feedback signal are updated on every positive edge of the clk signal. integrator1 through integrator8 are used to store the accumulated values of the analog input and feedback signal over time. The feedback signal is determined by comparing the value of the 8th integrator to a threshold value of 0x7FFFFF (the maximum value of a signed 24-bit number). If the value of the 8th integrator is greater than 0x7FFFFF, then the feedback signal is set to 0xFFFFFF (i.e., the output is high), otherwise the feedback signal is set to 0 (i.e., the output is low). The output of the ADC is a 33-bit value, with the first 25 bits representing the integer part of the ADC output and the last 8 bits representing the fractional part of the ADC output.
 
 
 # Sigma Delta DMM812
 ## ADC_Sigma_Delta_DMM812.v
-This is an example of an 8 1/2 digit ADC. This module "ADC_Sigma_Delta_DMM812.v" includes the sd_oversampler, sd_digital_filter, sd_decimator, and sd_calibration modules. The analog_in input is oversampled using the sd_oversampler module, and the resulting signal is filtered using the sd_filter module. The filtered signal is then decimated using the sd_decimator module to produce the final output value. Finally, the output is calibrated using the sd_calibration module to adjust for any gain or offset errors in the ADC. Note that the oversampling rate, filter coefficients, and decimation factor used in this implementation are not specified, and would need to be chosen based on the specific requirements of the ADC design. Additionally, this implementation assumes that the input analog_in is a 24-bit signed value, and that the output digital_out is a 33-bit signed value.
+### The goal is to convert an analog input signal into a digital output signal with a high level of precision and accuracy.
+This is an example of an 8 1/2 digit ADC. This module "ADC_Sigma_Delta_DMM812.v" includes the sd_oversampler, sd_digital_filter, sd_decimator, and sd_calibration modules. The analog_in input is oversampled using the sd_oversampler module, and the resulting signal is filtered using the sd_filter module. The filtered signal is then decimated using the sd_decimator module to produce the input to the sd_modulator which results in the final output value. Finally, the output is calibrated using the sd_calibration module to adjust for any gain or offset errors in the ADC. Note that the oversampling rate, filter coefficients, decimation factor, modulator gain used in this implementation are not specified, and would need to be chosen based on the specific requirements of the ADC design. Additionally, this implementation assumes that the input analog_in is a 24-bit signed value, and that the output digital_out is a 33-bit signed value.
 
 ## ADC_Sigma_Delta_DMM812_Oversampling.v
 This sd_oversampler module uses a loop to oversample the input signal at a rate of OSR times the input frequency, where OSR is a parameter set to 64 in this example. The integrator and feedback registers are updated for each iteration of the loop. The output is a 48-bit signal that includes the feedback and integrator registers concatenated together.
