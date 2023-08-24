@@ -1,5 +1,5 @@
 # FPGA-Pesudocode
-Verilog/HDL implementations of various circuits. These are all untested. Basically my workbook while I teach myself.
+Verilog/HDL implementations of various impossible circuits. These are all untested as you can't do analog on an FPGA. Theoretically you could use these for an ASIC. Basically my workbook while I teach myself the syntax.
 
 # Multislope ADC from HP
 On Page 8 of the 1989 Vol.40 No.2 Hewlett-Packard Journal, there is an article by Wayne C. Goeke titled:
